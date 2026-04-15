@@ -1,116 +1,698 @@
 :root {
-  color-scheme: light;
-  --bg-top: #f6efe5;
-  --bg-bottom: #d9e6f2;
-  --card: rgba(255, 255, 255, 0.86);
-  --text: #1f2a37;
-  --muted: #526070;
-  --primary: #0f766e;
-  --primary-dark: #115e59;
-  --border: rgba(31, 42, 55, 0.1);
-  --shadow: 0 24px 60px rgba(31, 42, 55, 0.14);
+  color-scheme: dark;
+  --bg: #090b10;
+  --panel: rgba(15, 20, 30, 0.78);
+  --line: rgba(255, 255, 255, 0.12);
+  --line-strong: rgba(255, 255, 255, 0.22);
+  --text: #f2f4f8;
+  --muted: #96a2b3;
+  --accent: #c89a58;
+  --shadow: 0 32px 80px rgba(0, 0, 0, 0.35);
+  --max-width: 1180px;
 }
 
 * {
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
-  min-height: 100vh;
-  font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: "Segoe UI Variable", "PingFang SC", "Microsoft YaHei", sans-serif;
   color: var(--text);
   background:
-    radial-gradient(circle at top, rgba(255, 255, 255, 0.8), transparent 45%),
-    linear-gradient(160deg, var(--bg-top), var(--bg-bottom));
+    radial-gradient(circle at top left, rgba(143, 211, 255, 0.13), transparent 28%),
+    radial-gradient(circle at top right, rgba(200, 154, 88, 0.16), transparent 32%),
+    linear-gradient(180deg, #080a0f 0%, #0c1017 54%, #090b10 100%);
 }
 
-.page {
-  min-height: 100vh;
-  display: grid;
+body::before {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 64px 64px;
+  content: "";
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.55), transparent 85%);
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  width: min(calc(100% - 32px), var(--max-width));
+  margin: 0 auto;
+  padding: 18px 0;
+  backdrop-filter: blur(18px);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.brand-mark {
+  display: inline-grid;
   place-items: center;
-  padding: 24px;
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgba(200, 154, 88, 0.36);
+  border-radius: 14px;
+  background: linear-gradient(145deg, rgba(200, 154, 88, 0.24), rgba(143, 211, 255, 0.1));
+  font-family: "Bahnschrift", "Segoe UI Variable", sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
 }
 
-.card {
-  width: min(720px, 100%);
-  padding: 40px 28px;
-  border: 1px solid var(--border);
-  border-radius: 24px;
-  background: var(--card);
+.brand-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.brand-copy strong {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.brand-copy span {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.nav a {
+  padding: 10px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.nav a:hover {
+  color: var(--text);
+  border-color: rgba(200, 154, 88, 0.35);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+main {
+  width: min(calc(100% - 32px), var(--max-width));
+  margin: 0 auto;
+  padding: 28px 0 96px;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+  gap: 28px;
+  align-items: stretch;
+  min-height: calc(100vh - 140px);
+  padding-top: 40px;
+}
+
+.hero-copy,
+.hero-stage,
+.overview-card,
+.feature-card,
+.spec-card,
+.story-card,
+.driving-card,
+.sales-card,
+.material-card {
+  border: 1px solid var(--line);
+  background: var(--panel);
   box-shadow: var(--shadow);
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(18px);
+}
+
+.hero-copy {
+  padding: 42px;
+  border-radius: 32px;
 }
 
 .eyebrow {
-  margin: 0 0 12px;
-  color: var(--primary-dark);
-  font-size: 14px;
+  margin: 0 0 18px;
+  color: var(--accent);
+  font-size: 13px;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
-h1 {
+.hero h1,
+.section-heading h2 {
   margin: 0;
-  font-size: clamp(32px, 6vw, 56px);
-  line-height: 1.06;
+  font-family: "Bahnschrift", "Segoe UI Variable", "PingFang SC", sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.01em;
 }
 
-.lead {
-  margin: 20px 0 0;
-  font-size: 18px;
-  line-height: 1.7;
+.hero h1 {
+  font-size: clamp(42px, 5.6vw, 76px);
+  line-height: 1.02;
+}
+
+.hero-lead,
+.section-heading p,
+.feature-card p,
+.spec-card span,
+.story-card span,
+.driving-card span,
+.sales-card strong,
+.material-card span,
+.overview-card span,
+.stage-card span,
+.stage-panel li {
   color: var(--muted);
 }
 
-.actions {
+.hero-lead {
+  max-width: 720px;
+  margin: 24px 0 0;
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+.hero-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 28px;
+  gap: 14px;
+  margin-top: 30px;
 }
 
 .button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 48px;
-  padding: 0 18px;
-  border: 1px solid var(--border);
+  min-height: 52px;
+  padding: 0 20px;
+  border: 1px solid var(--line-strong);
   border-radius: 999px;
   color: var(--text);
   text-decoration: none;
   font-weight: 600;
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.03);
   transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
 .button:hover {
   transform: translateY(-1px);
-  box-shadow: 0 10px 24px rgba(31, 42, 55, 0.12);
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.25);
 }
 
 .button.primary {
-  color: #ffffff;
   border-color: transparent;
-  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  background: linear-gradient(135deg, #c89a58, #8e6a3d);
+  color: #0d1016;
 }
 
-@media (max-width: 640px) {
-  .card {
-    padding: 28px 20px;
+.hero-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hero-tags li {
+  padding: 10px 14px;
+  border: 1px solid rgba(143, 211, 255, 0.18);
+  border-radius: 999px;
+  background: rgba(143, 211, 255, 0.08);
+  color: #d8efff;
+  font-size: 14px;
+}
+
+.hero-stage {
+  position: relative;
+  overflow: hidden;
+  min-height: 620px;
+  padding: 24px;
+  border-radius: 36px;
+  background:
+    linear-gradient(180deg, rgba(200, 154, 88, 0.08), transparent 26%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
+}
+
+.stage-backdrop {
+  position: absolute;
+  inset: 14% 10% auto;
+  height: 230px;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.18) 34%, transparent 66%),
+    radial-gradient(circle at 24% 55%, rgba(143, 211, 255, 0.35), transparent 34%),
+    radial-gradient(circle at 74% 45%, rgba(200, 154, 88, 0.42), transparent 36%);
+  filter: blur(16px);
+  opacity: 0.72;
+}
+
+.stage-number {
+  position: absolute;
+  right: 22px;
+  bottom: -12px;
+  color: rgba(255, 255, 255, 0.08);
+  font-family: "Bahnschrift", "Segoe UI Variable", sans-serif;
+  font-size: clamp(180px, 26vw, 320px);
+  font-weight: 700;
+  line-height: 0.88;
+  letter-spacing: 0.02em;
+}
+
+.stage-card,
+.stage-panel {
+  position: relative;
+  z-index: 1;
+  width: min(270px, 100%);
+  padding: 18px 18px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 24px;
+  background: rgba(7, 10, 16, 0.58);
+  backdrop-filter: blur(18px);
+}
+
+.stage-card p,
+.stage-panel p,
+.overview-card p,
+.feature-card .feature-index,
+.spec-card p,
+.story-card p,
+.driving-card p,
+.sales-card p {
+  margin: 0;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.stage-card strong,
+.stage-panel strong,
+.overview-card strong,
+.feature-card h3,
+.spec-card strong,
+.story-card strong,
+.driving-card strong,
+.material-card strong {
+  display: block;
+  margin-top: 10px;
+  font-size: 24px;
+  line-height: 1.24;
+}
+
+.stage-card span {
+  display: block;
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.stage-card-top {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+}
+
+.stage-card-bottom {
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+}
+
+.stage-panel {
+  position: absolute;
+  left: 24px;
+  bottom: 24px;
+  padding-right: 24px;
+}
+
+.stage-panel ul {
+  margin: 12px 0 0;
+  padding-left: 18px;
+}
+
+.stage-panel li + li {
+  margin-top: 10px;
+}
+
+.overview {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.overview-card {
+  padding: 26px;
+  border-radius: 28px;
+}
+
+.overview-card strong {
+  margin-top: 14px;
+  font-size: 28px;
+}
+
+.overview-card span {
+  display: block;
+  margin-top: 10px;
+  line-height: 1.7;
+}
+
+.section {
+  margin-top: 92px;
+}
+
+.section-heading {
+  max-width: 780px;
+  margin-bottom: 28px;
+}
+
+.section-heading h2 {
+  font-size: clamp(32px, 4vw, 52px);
+  line-height: 1.08;
+}
+
+.section-heading p {
+  margin: 16px 0 0;
+  font-size: 17px;
+  line-height: 1.8;
+}
+
+.feature-grid,
+.spec-grid,
+.sales-grid,
+.materials-grid {
+  display: grid;
+  gap: 18px;
+}
+
+.feature-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.feature-card,
+.sales-card,
+.material-card {
+  padding: 26px;
+  border-radius: 28px;
+}
+
+.feature-card h3 {
+  margin-bottom: 0;
+  font-size: 28px;
+}
+
+.feature-card p {
+  margin-top: 14px;
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.feature-index {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(200, 154, 88, 0.14);
+}
+
+.spec-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.spec-card {
+  min-height: 198px;
+  padding: 26px;
+  border-radius: 28px;
+}
+
+.spec-card strong {
+  font-size: 30px;
+}
+
+.spec-card span {
+  display: block;
+  margin-top: 12px;
+  line-height: 1.8;
+}
+
+.spec-card.accent {
+  background:
+    linear-gradient(180deg, rgba(200, 154, 88, 0.14), transparent 70%),
+    rgba(15, 20, 30, 0.86);
+}
+
+.section-split .split-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.96fr) minmax(340px, 1.04fr);
+  gap: 18px;
+}
+
+.story-panel {
+  display: grid;
+  gap: 18px;
+}
+
+.story-card,
+.driving-card {
+  padding: 24px;
+  border-radius: 26px;
+}
+
+.story-card strong,
+.driving-card strong {
+  font-size: 26px;
+}
+
+.story-card span,
+.driving-card span,
+.sales-card strong,
+.material-card span {
+  display: block;
+  margin-top: 10px;
+  line-height: 1.8;
+  font-size: 16px;
+}
+
+.space-visual {
+  min-height: 520px;
+}
+
+.space-frame {
+  position: relative;
+  height: 100%;
+  min-height: 520px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 32px;
+  background:
+    radial-gradient(circle at top left, rgba(143, 211, 255, 0.16), transparent 24%),
+    radial-gradient(circle at bottom right, rgba(200, 154, 88, 0.18), transparent 26%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.02));
+  box-shadow: var(--shadow);
+}
+
+.space-band {
+  position: absolute;
+  left: 24px;
+  top: 24px;
+  z-index: 2;
+  padding: 10px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  background: rgba(7, 10, 16, 0.56);
+  color: #dce7f4;
+  font-size: 14px;
+}
+
+.space-line {
+  position: absolute;
+  left: 11%;
+  right: 11%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.22), transparent);
+}
+
+.space-line-a {
+  top: 38%;
+}
+
+.space-line-b {
+  top: 68%;
+}
+
+.space-metric {
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+  width: min(360px, calc(100% - 48px));
+  padding: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 26px;
+  background: rgba(7, 10, 16, 0.62);
+  backdrop-filter: blur(18px);
+}
+
+.space-metric p {
+  margin: 0;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.space-metric strong {
+  display: block;
+  margin-top: 10px;
+  font-size: 26px;
+  line-height: 1.4;
+}
+
+.driving-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.sales-grid,
+.materials-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.sales-card strong {
+  font-size: 22px;
+}
+
+.materials-section {
+  padding-bottom: 18px;
+}
+
+.material-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 190px;
+}
+
+.material-card::after {
+  position: absolute;
+  inset: auto -40px -40px auto;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(143, 211, 255, 0.18), transparent 68%);
+  content: "";
+}
+
+@media (max-width: 1080px) {
+  .hero,
+  .section-split .split-layout {
+    grid-template-columns: 1fr;
   }
 
-  .lead {
-    font-size: 16px;
+  .feature-grid,
+  .overview,
+  .spec-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+}
 
-  .actions {
+@media (max-width: 760px) {
+  .topbar {
     flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav {
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  main {
+    width: min(calc(100% - 20px), var(--max-width));
+    padding-top: 12px;
+  }
+
+  .hero {
+    min-height: auto;
+    gap: 18px;
+    padding-top: 10px;
+  }
+
+  .hero-copy,
+  .hero-stage,
+  .overview-card,
+  .feature-card,
+  .spec-card,
+  .story-card,
+  .driving-card,
+  .sales-card,
+  .material-card {
+    padding: 22px;
+  }
+
+  .hero-stage {
+    min-height: 540px;
+  }
+
+  .stage-card-top,
+  .stage-card-bottom,
+  .stage-panel {
+    position: relative;
+    left: auto;
+    right: auto;
+    top: auto;
+    bottom: auto;
+    width: 100%;
+  }
+
+  .stage-card-top,
+  .stage-panel {
+    margin-bottom: 14px;
+  }
+
+  .stage-number {
+    right: 8px;
+    bottom: 10px;
+    font-size: 180px;
+  }
+
+  .overview,
+  .feature-grid,
+  .spec-grid,
+  .driving-grid,
+  .sales-grid,
+  .materials-grid {
+    grid-template-columns: 1fr;
   }
 
   .button {
     width: 100%;
+  }
+
+  .hero-actions {
+    flex-direction: column;
   }
 }
